@@ -4,24 +4,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gustavolima.workshopmongo.domain.User;
+import br.com.gustavolima.workshopmongo.service.UserService;
 
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
 	
+	@Autowired
+	private UserService service;
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<User>>  findAll() {
-		User gustavo = new User("1", "Gustavo Lima", "gustavo93.lima@gmail.com");
-		User maria = new User("2", "Maria Aparecida", "maria.aparecida@gmail.com");
 		
-		List<User> list = new ArrayList<>();
-		list.addAll(Arrays.asList(gustavo,maria));
+		List<User> list = service.fildAll();
 		
 		return ResponseEntity.ok().body(list);
 	}
